@@ -1,4 +1,4 @@
-package com.facil.notes
+package com.facil.notes.activities.main
 
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
@@ -8,16 +8,26 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import android.support.v4.widget.DrawerLayout
 import android.support.design.widget.NavigationView
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
+import android.widget.FrameLayout
+import com.facil.notes.R
+import com.facil.notes.fragments.NotesListFragment
+import com.facil.notes.framework.BaseActivity
+import com.facil.notes.pojos.Note
+import com.facil.notes.repositories.NotesRepository
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener,
+    MainActivityContract.View {
 
+    private val notesListFragment = NotesListFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val presenter = MainPresenter(this, NotesRepository())
+
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -29,12 +39,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val toggle = ActionBarDrawerToggle(
-            this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+            this, drawerLayout, toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
         navView.setNavigationItemSelectedListener(this)
+
+
+        if (savedInstanceState != null) {
+            return
+        }
+
+        presenter.loadNotes()
+        notesListFragment.presenter = presenter
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fl_notes_list, notesListFragment)
+            .commitNow()
     }
 
     override fun onBackPressed() {
@@ -87,5 +110,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onNotesLoaded(notes: ArrayList<Note>) {
+        notesListFragment.onNotesLoaded(notes)
+    }
+
+    override fun onNoteSelected(note: Note) {
+        //findViewById<FrameLayout>()
     }
 }
