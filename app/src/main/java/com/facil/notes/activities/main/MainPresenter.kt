@@ -1,9 +1,8 @@
 package com.facil.notes.activities.main
 
 import com.facil.notes.framework.BasePresenter
-import com.facil.notes.pojos.Note
+import com.facil.notes.presenters.MainActivityContract
 import com.facil.notes.repositories.NoteRepositoryContract
-import com.facil.notes.repositories.NotesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

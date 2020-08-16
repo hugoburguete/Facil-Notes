@@ -1,4 +1,4 @@
-package com.facil.notes.activities.main
+package com.facil.notes.presenters
 
 import com.facil.notes.framework.BasePresenter
 import com.facil.notes.framework.BaseView
@@ -6,7 +6,8 @@ import com.facil.notes.pojos.Note
 
 class MainActivityContract {
     // Views
-    interface View: BaseView<Presenter>, OnNoteSelectedListener {
+    interface View: BaseView<Presenter>,
+        OnNoteSelectedListener {
         fun onNotesLoaded(notes: ArrayList<Note>)
     }
 

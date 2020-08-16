@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.facil.notes.R
 import com.facil.notes.activities.main.MainActivity
-import com.facil.notes.activities.main.MainActivityContract
+import com.facil.notes.presenters.MainActivityContract
 import com.facil.notes.adapters.MyNoteRecyclerViewAdapter
 import com.facil.notes.framework.BaseFragment
 import com.facil.notes.pojos.Note
@@ -32,7 +32,7 @@ class NotesListFragment : BaseFragment(), MainActivityContract.OnNoteSelectedLis
     }
 
     override fun onNoteSelected(note: Note) {
-        (activity as MainActivity).onNoteSelected(Note())
+        (activity as MainActivity).onNoteSelected(note)
     }
 
     fun onNotesLoaded(notes: ArrayList<Note>) {

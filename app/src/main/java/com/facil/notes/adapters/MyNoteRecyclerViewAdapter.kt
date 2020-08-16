@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.facil.notes.R
-import com.facil.notes.activities.main.MainActivityContract
+import com.facil.notes.presenters.MainActivityContract
 
 import com.facil.notes.pojos.Note
 
