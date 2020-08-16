@@ -4,7 +4,9 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Facil Notes</string>
     <string name="nav_header_desc">Navigation header</string>
+
     <string name="action_settings">Settings</string>
+    <string name="action_save">Save</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>

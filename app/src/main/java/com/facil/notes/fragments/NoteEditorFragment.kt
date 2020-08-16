@@ -12,10 +12,10 @@ import com.facil.notes.pojos.Note
 import com.facil.notes.presenters.NoteEditorContract
 import com.facil.notes.repositories.NotesRepository
 import kotlinx.android.synthetic.main.fragment_note_editor.*
-import java.lang.Exception
 
 class NoteEditorFragment : BaseFragment(), NoteEditorContract.View {
     private val presenter: NoteEditorPresenter = NoteEditorPresenter(this, NotesRepository())
+    var note: Note? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +35,17 @@ class NoteEditorFragment : BaseFragment(), NoteEditorContract.View {
         return inflater.inflate(R.layout.fragment_note_editor, container, false)
     }
 
+    fun saveNote() {
+        val n = note;
+        if (n is Note) {
+            n.title = etTitle.text.toString()
+            n.content = etNoteContent.text.toString()
+            presenter.saveNote(n)
+        }
+    }
+
     override fun onNoteLoaded(note: Note) {
+        this.note = note;
         val rootView = view
         if (rootView is View) {
             // Set the note content
@@ -45,9 +55,7 @@ class NoteEditorFragment : BaseFragment(), NoteEditorContract.View {
             // Save note handler
             rootView.findViewById<Button>(R.id.btn_save_note)
                 .setOnClickListener {
-                    note.title = etTitle.text.toString()
-                    note.content = etNoteContent.text.toString()
-                    presenter.saveNote(note)
+                    saveNote()
                 }
         }
     }

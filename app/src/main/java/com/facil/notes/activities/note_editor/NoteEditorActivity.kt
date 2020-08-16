@@ -1,16 +1,18 @@
 package com.facil.notes.activities.note_editor
 
 import android.os.Bundle
-import android.os.PersistableBundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import com.facil.notes.R
 import com.facil.notes.fragments.NoteEditorFragment
 import com.facil.notes.framework.BaseActivity
 import com.facil.notes.presenters.NoteEditorContract
-import java.lang.Exception
 
 class NoteEditorActivity : BaseActivity(), NoteEditorContract.OnNoteSavedListener,
     NoteEditorContract.OnNoteLoadFailureListener {
+    private val fragment = NoteEditorFragment()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_note_editor)
@@ -18,11 +20,26 @@ class NoteEditorActivity : BaseActivity(), NoteEditorContract.OnNoteSavedListene
         val noteId = intent.getStringExtra("noteId")
         val arguments = Bundle()
         arguments.putString("noteId", noteId)
-        val fragment = NoteEditorFragment()
         fragment.arguments = arguments
 
         inflateFragment(R.id.fl_note_editor_fragment, fragment)
     }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.note_editor, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_save -> {
+                fragment.saveNote()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
 
     override fun onNoteSaved() {
         Toast.makeText(this, "Note saved", Toast.LENGTH_SHORT).show()
