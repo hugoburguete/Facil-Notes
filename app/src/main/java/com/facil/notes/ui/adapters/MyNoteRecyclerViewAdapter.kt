@@ -8,9 +8,8 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.facil.notes.R
-import com.facil.notes.ui.fragments.note_list.NoteListContract
-
 import com.facil.notes.pojos.Note
+import com.facil.notes.ui.fragments.note_list.NoteListContract
 
 /**
  * [RecyclerView.Adapter] that can display a [Note].
@@ -19,6 +18,8 @@ class MyNoteRecyclerViewAdapter(
     private val mNotes: ArrayList<Note>,
     private val onNoteSelectedListener: NoteListContract.OnNoteSelectedListener
 ) : RecyclerView.Adapter<MyNoteRecyclerViewAdapter.ViewHolder>() {
+
+    val loading = true;
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)

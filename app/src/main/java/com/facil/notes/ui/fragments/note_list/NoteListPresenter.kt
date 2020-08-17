@@ -6,13 +6,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 
 class NoteListPresenter(
     private val view: NoteListContract.View,
     private val notesRepository: NoteRepositoryContract
 ): BasePresenter, NoteListContract.Presenter {
     override fun loadNotes() {
+        view.onNotesLoading()
         GlobalScope.launch {
             try {
                 val notesList = notesRepository.getNotes()
@@ -20,7 +20,22 @@ class NoteListPresenter(
                     view.onNotesLoaded(notesList)
                 }
             } catch (error: Exception) {
-                println(error.message)
+                view.onNotesLoadFailure(error)
+            }
+        }
+    }
+
+    override fun searchNotes(searchTerm: String) {
+        view.onNotesLoading()
+        // TODO: Implement this
+        GlobalScope.launch {
+            try {
+                val notesList = notesRepository.getNotesBySearchTerm(searchTerm)
+                withContext(Dispatchers.Main) {
+                    view.onNotesFound(notesList)
+                }
+            } catch (error: Exception) {
+                view.onNotesSearchFailure(error)
             }
         }
     }
