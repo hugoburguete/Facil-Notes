@@ -5,14 +5,13 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.facil.notes.R
-import com.facil.notes.ui.fragments.note_editor.NoteEditorFragment
 import com.facil.notes.framework.BaseActivity
 import com.facil.notes.ui.fragments.note_editor.NoteEditorContract
+import com.facil.notes.ui.fragments.note_editor.NoteEditorFragment
 
 class NoteEditorActivity : BaseActivity(), NoteEditorContract.OnNoteSavedListener,
     NoteEditorContract.OnNoteLoadFailureListener {
-    private val fragment =
-        NoteEditorFragment()
+    private val fragment = NoteEditorFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
