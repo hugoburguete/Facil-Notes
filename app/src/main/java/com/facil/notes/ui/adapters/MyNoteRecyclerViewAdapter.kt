@@ -1,4 +1,4 @@
-package com.facil.notes.adapters
+package com.facil.notes.ui.adapters
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.facil.notes.R
-import com.facil.notes.presenters.MainActivityContract
+import com.facil.notes.ui.fragments.note_list.NoteListContract
 
 import com.facil.notes.pojos.Note
 
@@ -15,7 +15,7 @@ import com.facil.notes.pojos.Note
  */
 class MyNoteRecyclerViewAdapter(
     private val mNotes: ArrayList<Note>,
-    private val onNoteSelectedListener: MainActivityContract.OnNoteSelectedListener
+    private val onNoteSelectedListener: NoteListContract.OnNoteSelectedListener
 ) : RecyclerView.Adapter<MyNoteRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -41,7 +41,7 @@ class MyNoteRecyclerViewAdapter(
         private val idView: TextView = view.findViewById(R.id.item_number)
         private val contentView: TextView = view.findViewById(R.id.content)
 
-        fun bind(item: Note, onNoteSelectedListener: MainActivityContract.OnNoteSelectedListener) {
+        fun bind(item: Note, onNoteSelectedListener: NoteListContract.OnNoteSelectedListener) {
             idView.text = item.id
             contentView.text = item.title
             itemView.setOnClickListener{ onNoteSelectedListener.onNoteSelected(item) }

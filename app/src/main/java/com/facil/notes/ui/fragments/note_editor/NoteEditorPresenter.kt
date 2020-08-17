@@ -1,7 +1,6 @@
-package com.facil.notes.activities.note_editor
+package com.facil.notes.ui.fragments.note_editor
 
 import com.facil.notes.pojos.Note
-import com.facil.notes.presenters.NoteEditorContract
 import com.facil.notes.repositories.NoteRepositoryContract
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

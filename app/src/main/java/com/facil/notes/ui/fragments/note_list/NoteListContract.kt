@@ -1,10 +1,10 @@
-package com.facil.notes.presenters
+package com.facil.notes.ui.fragments.note_list
 
 import com.facil.notes.framework.BasePresenter
 import com.facil.notes.framework.BaseView
 import com.facil.notes.pojos.Note
 
-class MainActivityContract {
+class NoteListContract {
     // Views
     interface View: BaseView<Presenter>,
         OnNoteSelectedListener {

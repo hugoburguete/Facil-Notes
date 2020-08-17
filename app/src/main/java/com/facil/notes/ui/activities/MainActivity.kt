@@ -1,4 +1,4 @@
-package com.facil.notes.activities.main
+package com.facil.notes.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,18 +8,17 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.FrameLayout
 import com.facil.notes.R
-import com.facil.notes.activities.note_editor.NoteEditorActivity
-import com.facil.notes.fragments.NoteEditorFragment
-import com.facil.notes.fragments.NotesListFragment
+import com.facil.notes.ui.fragments.note_editor.NoteEditorFragment
+import com.facil.notes.ui.fragments.note_list.NotesListFragment
 import com.facil.notes.framework.BaseActivity
 import com.facil.notes.pojos.Note
-import com.facil.notes.presenters.MainActivityContract
-import com.facil.notes.presenters.NoteEditorContract
+import com.facil.notes.ui.fragments.note_list.NoteListContract
+import com.facil.notes.ui.fragments.note_editor.NoteEditorContract
 import com.facil.notes.repositories.NotesRepository
+import com.facil.notes.ui.fragments.note_list.NoteListPresenter
 
-class MainActivity : BaseActivity(),
-    MainActivityContract.View, NoteEditorContract.OnNoteLoadFailureListener,
-    NoteEditorContract.OnNoteSavedListener {
+class MainActivity : BaseActivity(), NoteListContract.OnNoteSelectedListener,
+    NoteEditorContract.OnNoteLoadFailureListener, NoteEditorContract.OnNoteSavedListener {
 
     private val notesListFragment = NotesListFragment()
 
@@ -27,20 +26,12 @@ class MainActivity : BaseActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val presenter = MainPresenter(this, NotesRepository())
-
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
 
-        if (savedInstanceState != null) {
-            return
-        }
-
-        presenter.loadNotes()
-        notesListFragment.presenter = presenter
         inflateFragment(R.id.fl_notes_list, notesListFragment)
     }
 
@@ -56,14 +47,11 @@ class MainActivity : BaseActivity(),
         }
     }
 
-    override fun onNotesLoaded(notes: ArrayList<Note>) {
-        notesListFragment.onNotesLoaded(notes)
-    }
-
     override fun onNoteSelected(note: Note) {
         val flNoteEditor = findViewById<FrameLayout>(R.id.fl_note_editor)
         if (flNoteEditor != null) {
-            val noteEditorFragment = NoteEditorFragment()
+            val noteEditorFragment =
+                NoteEditorFragment()
             val bundle = Bundle()
             bundle.putString("noteId", note.id)
             noteEditorFragment.arguments = bundle

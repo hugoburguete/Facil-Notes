@@ -1,7 +1,6 @@
-package com.facil.notes.activities.main
+package com.facil.notes.ui.fragments.note_list
 
 import com.facil.notes.framework.BasePresenter
-import com.facil.notes.presenters.MainActivityContract
 import com.facil.notes.repositories.NoteRepositoryContract
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -9,10 +8,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.Exception
 
-class MainPresenter(
-    private val view: MainActivityContract.View,
+class NoteListPresenter(
+    private val view: NoteListContract.View,
     private val notesRepository: NoteRepositoryContract
-): BasePresenter, MainActivityContract.Presenter {
+): BasePresenter, NoteListContract.Presenter {
     override fun loadNotes() {
         GlobalScope.launch {
             try {

@@ -1,4 +1,4 @@
-package com.facil.notes.presenters
+package com.facil.notes.ui.fragments.note_editor
 
 import com.facil.notes.framework.BasePresenter
 import com.facil.notes.framework.BaseView
@@ -12,15 +12,17 @@ class NoteEditorContract {
         fun saveNote(note: Note)
     }
 
-    interface View: BaseView<Presenter>, OnNoteSavedListener, OnNoteLoadFailureListener {
+    interface View: BaseView<Presenter>,
+        OnNoteSavedListener,
+        OnNoteLoadFailureListener {
         fun onNoteLoaded(note: Note)
     }
 
+    // Events
     interface OnNoteLoadFailureListener {
         fun onNoteLoadFailure(e: Exception)
     }
 
-    // Events
     interface OnNoteSavedListener {
         fun onNoteSaved()
         fun onNoteSaveFailure(e: Exception)
