@@ -7,17 +7,56 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- General -->
+    <style name="AppTheme.Activity">
+        <item name="android:background">@color/colorBackground</item>
+    </style>
+
+    <!-- Widgets -->
     <style name="AppTheme.EditText" parent="Widget.AppCompat.EditText">
         <item name="android:background">@drawable/et_background</item>
         <item name="android:layout_marginBottom">@dimen/section_margin</item>
         <item name="android:padding">@dimen/et_padding</item>
+    </style>
+
+    <style name="AppTheme.NoteListItem">
+        <item name="android:background">@drawable/et_background</item>
+        <item name="android:layout_marginBottom">@dimen/section_margin</item>
+        <item name="android:padding">@dimen/et_padding</item>
+    </style>
+
+    <style name="AppTheme.NoteListItemTitle" parent="TextAppearance.AppCompat">
+        <item name="android:layout_marginBottom">@dimen/list_item_margin</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="AppTheme.NoteListItemContent" parent="TextAppearance.AppCompat">
+        <item name="android:maxLines">2</item>
+        <item name="android:layout_marginBottom">@dimen/list_item_margin</item>
+        <item name="android:textColor">#6C6C6C</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="AppTheme.NoteListItemTagIcon">
+        <item name="android:layout_width">14dp</item>
+        <item name="android:layout_height">14dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginEnd">10dp</item>
+        <item name="android:background">#FF0000</item>
+    </style>
+
+    <style name="AppTheme.NoteListItemTagName">
+        <item name="android:textSize">12sp</item>
     </style>
 
 </resources>

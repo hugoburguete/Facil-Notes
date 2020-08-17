@@ -32,7 +32,7 @@ class NotesListFragment : BaseFragment(), NoteListContract.View {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_notes_list_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_notes_list, container, false)
         val lvNotes = view.findViewById<RecyclerView>(R.id.lvNotes)
         lvNotes.layoutManager = LinearLayoutManager(context)
 
