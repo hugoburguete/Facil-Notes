@@ -67,7 +67,7 @@ class MainActivity : BaseActivity(),
             val bundle = Bundle()
             bundle.putString("noteId", note.id)
             noteEditorFragment.arguments = bundle
-            inflateFragment(R.id.fl_notes_list, noteEditorFragment)
+            inflateFragment(R.id.fl_note_editor, noteEditorFragment)
         } else {
             val intent = Intent(this, NoteEditorActivity::class.java).apply {
                 putExtra("noteId", note.id)
