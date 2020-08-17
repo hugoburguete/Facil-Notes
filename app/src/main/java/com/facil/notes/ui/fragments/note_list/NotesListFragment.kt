@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.facil.notes.R
-import com.facil.notes.ui.activities.MainActivity
 import com.facil.notes.ui.adapters.MyNoteRecyclerViewAdapter
 import com.facil.notes.framework.BaseFragment
 import com.facil.notes.pojos.Note
@@ -34,7 +33,7 @@ class NotesListFragment : BaseFragment(), NoteListContract.View {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_notes_list_list, container, false)
-        val lvNotes = view.findViewById<RecyclerView>(R.id.lv_notes)
+        val lvNotes = view.findViewById<RecyclerView>(R.id.lvNotes)
         lvNotes.layoutManager = LinearLayoutManager(context)
 
         return view
@@ -45,7 +44,7 @@ class NotesListFragment : BaseFragment(), NoteListContract.View {
     }
 
     override fun onNotesLoaded(notes: ArrayList<Note>) {
-        val lvNotes = view?.findViewById<RecyclerView>(R.id.lv_notes)
+        val lvNotes = view?.findViewById<RecyclerView>(R.id.lvNotes)
         if (lvNotes != null) {
             lvNotes.adapter = MyNoteRecyclerViewAdapter(notes, this)
         }
