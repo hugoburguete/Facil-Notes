@@ -51,7 +51,7 @@ class MainActivity : BaseActivity(), NoteListContract.OnNoteSelectedListener,
             val noteEditorFragment =
                 NoteEditorFragment()
             val bundle = Bundle()
-            bundle.putString("noteId", note.id)
+            bundle.putInt("noteId", note.id)
             noteEditorFragment.arguments = bundle
             inflateFragment(R.id.fl_note_editor, noteEditorFragment)
         } else {

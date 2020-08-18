@@ -14,7 +14,7 @@ class NoteEditorPresenter(
     /**
      * Retrieves and returns a specific note
      */
-    override suspend fun loadNote(noteId: String) {
+    override suspend fun loadNote(noteId: Int) {
         println("Loading note $noteId")
 
         try {

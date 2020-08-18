@@ -47,7 +47,7 @@ class MyNoteRecyclerViewAdapter(
         private val tvNoteListItemContent: TextView = view.findViewById(R.id.tvNoteListItemContent)
 
         fun bind(item: Note, onNoteSelectedListener: NoteListContract.OnNoteSelectedListener) {
-            tvTitle.text = item.id
+            tvTitle.text = item.id.toString()
             tvNoteListItemContent.text = item.title
             if (item.tag.isEmpty()) {
                 llTagContainer.visibility = View.GONE

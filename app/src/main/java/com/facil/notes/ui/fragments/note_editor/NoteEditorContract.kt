@@ -6,7 +6,7 @@ import com.facil.notes.pojos.Note
 
 class NoteEditorContract {
     interface Presenter: BasePresenter {
-        suspend fun loadNote(noteId: String)
+        suspend fun loadNote(noteId: Int)
 
         fun saveNote(note: Note)
     }

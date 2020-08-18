@@ -11,7 +11,7 @@ interface NoteRepositoryContract {
 
     suspend fun getNotesBySearchTerm(searchTerm: String): ArrayList<Note>
 
-    suspend fun getNote(noteId: String): Note
+    suspend fun getNote(noteId: Int): Note
 
     suspend fun saveNote(note: Note)
 }
@@ -23,8 +23,7 @@ class NotesRepository : BaseRepository(), NoteRepositoryContract {
             val noteList = ArrayList<Note>()
             var i = 0
             while (i < 20) {
-                val note = Note()
-                note.id = i.toString()
+                val note = Note(id = i)
                 note.title = "Note $i"
                 noteList.add(note)
                 i++
@@ -42,8 +41,7 @@ class NotesRepository : BaseRepository(), NoteRepositoryContract {
             val noteList = ArrayList<Note>()
             var i = 0
             while (i < 10) {
-                val note = Note()
-                note.id = "Note $i"
+                val note = Note(id = i)
                 note.title = "Note search result $i"
                 noteList.add(note)
                 i++
@@ -52,11 +50,10 @@ class NotesRepository : BaseRepository(), NoteRepositoryContract {
         }
     }
 
-    override suspend fun getNote(noteId: String): Note {
+    override suspend fun getNote(noteId: Int): Note {
         // TODO: Implement this
         return withContext(Dispatchers.IO) {
-            val note = Note()
-            note.id = noteId
+            val note = Note(noteId)
             note.title = "Note $noteId"
             note.content = "some content"
             delay(200)

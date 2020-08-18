@@ -23,7 +23,7 @@ class NoteEditorFragment : BaseFragment(), NoteEditorContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val noteId = arguments?.getString("noteId")
+        val noteId = arguments?.getInt("noteId")
         if (noteId == null) {
             onNoteLoadFailure(Exception("Invalid NoteId"))
         } else {
