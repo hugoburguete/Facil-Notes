@@ -1,8 +1,6 @@
 package com.facil.notes.ui.fragments.note_list
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -39,8 +37,9 @@ class NotesListFragment : BaseFragment(), NoteListContract.View {
         val view = inflater.inflate(R.layout.fragment_notes_list, container, false)
 
         // ListView
-        val lvNotes = view.findViewById<RecyclerView>(R.id.lvNotes)
-        lvNotes.layoutManager = LinearLayoutManager(context)
+        val lvNotes = view.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.lvNotes)
+        lvNotes.layoutManager =
+            androidx.recyclerview.widget.LinearLayoutManager(context)
         lvNotes.adapter = MyNoteRecyclerViewAdapter(ArrayList(), this)
 
         // Search Text
@@ -72,7 +71,7 @@ class NotesListFragment : BaseFragment(), NoteListContract.View {
         progressBar?.visibility = View.VISIBLE
 
         // Hide ListView
-        val lvNotes = view?.findViewById<RecyclerView>(R.id.lvNotes)
+        val lvNotes = view?.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.lvNotes)
         lvNotes?.visibility = View.GONE
     }
 
@@ -98,11 +97,11 @@ class NotesListFragment : BaseFragment(), NoteListContract.View {
         progressBar?.visibility = View.GONE
 
         // Display ListView
-        val lvNotes = view?.findViewById<RecyclerView>(R.id.lvNotes)
+        val lvNotes = view?.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.lvNotes)
         lvNotes?.visibility = View.VISIBLE
 
         // Populate ListView
-        if (lvNotes is RecyclerView) {
+        if (lvNotes is androidx.recyclerview.widget.RecyclerView) {
             val adapter = lvNotes.adapter
 
             if (adapter is MyNoteRecyclerViewAdapter) {

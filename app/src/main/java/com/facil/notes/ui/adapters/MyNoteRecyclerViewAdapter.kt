@@ -1,12 +1,12 @@
 package com.facil.notes.ui.adapters
 
 import android.graphics.Color
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.facil.notes.R
 import com.facil.notes.pojos.Note
 import com.facil.notes.ui.fragments.note_list.NoteListContract
@@ -17,7 +17,7 @@ import com.facil.notes.ui.fragments.note_list.NoteListContract
 class MyNoteRecyclerViewAdapter(
     private val mNotes: ArrayList<Note>,
     private val onNoteSelectedListener: NoteListContract.OnNoteSelectedListener
-) : RecyclerView.Adapter<MyNoteRecyclerViewAdapter.ViewHolder>() {
+) : androidx.recyclerview.widget.RecyclerView.Adapter<MyNoteRecyclerViewAdapter.ViewHolder>() {
 
     val loading = true;
 
@@ -40,7 +40,8 @@ class MyNoteRecyclerViewAdapter(
         notifyDataSetChanged()
     }
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(view: View) :
+        androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
         private val llTagContainer: LinearLayout = view.findViewById(R.id.llTagContainer)
         private val tvTitle: TextView = view.findViewById(R.id.tvTitle)
         private val tvNoteListItemContent: TextView = view.findViewById(R.id.tvNoteListItemContent)

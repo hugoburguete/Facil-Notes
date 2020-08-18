@@ -2,20 +2,18 @@ package com.facil.notes.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
-import android.support.design.widget.Snackbar
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.FrameLayout
 import com.facil.notes.R
-import com.facil.notes.ui.fragments.note_editor.NoteEditorFragment
-import com.facil.notes.ui.fragments.note_list.NotesListFragment
 import com.facil.notes.framework.BaseActivity
 import com.facil.notes.pojos.Note
-import com.facil.notes.ui.fragments.note_list.NoteListContract
 import com.facil.notes.ui.fragments.note_editor.NoteEditorContract
-import com.facil.notes.repositories.NotesRepository
-import com.facil.notes.ui.fragments.note_list.NoteListPresenter
+import com.facil.notes.ui.fragments.note_editor.NoteEditorFragment
+import com.facil.notes.ui.fragments.note_list.NoteListContract
+import com.facil.notes.ui.fragments.note_list.NotesListFragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : BaseActivity(), NoteListContract.OnNoteSelectedListener,
     NoteEditorContract.OnNoteLoadFailureListener, NoteEditorContract.OnNoteSavedListener {
