@@ -6,7 +6,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 
 class NoteEditorPresenter(
     private val view: NoteEditorContract.View,
@@ -15,18 +14,17 @@ class NoteEditorPresenter(
     /**
      * Retrieves and returns a specific note
      */
-    override fun loadNote(noteId: String) {
+    override suspend fun loadNote(noteId: String) {
         println("Loading note $noteId")
-        GlobalScope.launch {
-            try {
-                val note = notesRepository.getNote(noteId)
-                println("Note ${note.id} retrieved")
-                withContext(Dispatchers.Main) {
-                    view.onNoteLoaded(note)
-                }
-            } catch (error: Exception) {
-                view.onNoteLoadFailure(error)
+
+        try {
+            val note = notesRepository.getNote(noteId)
+//            println("Note ${note.id} retrieved")
+            withContext(Dispatchers.Main) {
+                view.onNoteLoaded(note)
             }
+        } catch (error: Exception) {
+            view.onNoteLoadFailure(error)
         }
     }
 

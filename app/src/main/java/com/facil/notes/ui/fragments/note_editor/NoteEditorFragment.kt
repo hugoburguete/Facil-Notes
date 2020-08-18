@@ -10,6 +10,8 @@ import com.facil.notes.framework.BaseFragment
 import com.facil.notes.pojos.Note
 import com.facil.notes.repositories.NotesRepository
 import kotlinx.android.synthetic.main.fragment_note_editor.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class NoteEditorFragment : BaseFragment(), NoteEditorContract.View {
     private val presenter: NoteEditorPresenter =
@@ -25,7 +27,9 @@ class NoteEditorFragment : BaseFragment(), NoteEditorContract.View {
         if (noteId == null) {
             onNoteLoadFailure(Exception("Invalid NoteId"))
         } else {
-            presenter.loadNote(noteId)
+            GlobalScope.launch {
+                presenter.loadNote(noteId)
+            }
         }
     }
 
