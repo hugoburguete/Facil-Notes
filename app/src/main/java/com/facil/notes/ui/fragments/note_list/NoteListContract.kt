@@ -2,17 +2,17 @@ package com.facil.notes.ui.fragments.note_list
 
 import com.facil.notes.framework.BasePresenter
 import com.facil.notes.framework.BaseView
-import com.facil.notes.pojos.Note
+import com.facil.notes.pojos.NoteWithTags
 
 class NoteListContract {
     // Views
     interface View : BaseView<Presenter>,
         OnNoteSelectedListener {
         fun onNotesLoading()
-        fun onNotesLoaded(notes: ArrayList<Note>)
+        fun onNotesLoaded(notes: List<NoteWithTags>)
         fun onNotesLoadFailure(e: Exception)
 
-        fun onNotesFound(notes: ArrayList<Note>)
+        fun onNotesFound(notes: List<NoteWithTags>)
         fun onNotesSearchFailure(e: Exception)
     }
 
@@ -24,6 +24,6 @@ class NoteListContract {
 
     // Events
     interface OnNoteSelectedListener {
-        fun onNoteSelected(note: Note)
+        fun onNoteSelected(noteWithTags: NoteWithTags)
     }
 }

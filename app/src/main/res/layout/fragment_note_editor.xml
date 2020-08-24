@@ -30,7 +30,7 @@
     <EditText
         android:id="@+id/etNoteContent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:ems="10"
         android:importantForAutofill="no"

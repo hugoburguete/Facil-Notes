@@ -9,17 +9,18 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facil.notes.R
 import com.facil.notes.pojos.Note
+import com.facil.notes.pojos.NoteWithTags
 import com.facil.notes.ui.fragments.note_list.NoteListContract
 
 /**
  * [RecyclerView.Adapter] that can display a [Note].
  */
 class MyNoteRecyclerViewAdapter(
-    private val mNotes: ArrayList<Note>,
+    private val mNotes: ArrayList<NoteWithTags>,
     private val onNoteSelectedListener: NoteListContract.OnNoteSelectedListener
-) : androidx.recyclerview.widget.RecyclerView.Adapter<MyNoteRecyclerViewAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<MyNoteRecyclerViewAdapter.ViewHolder>() {
 
-    val loading = true;
+    val loading = true
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -34,32 +35,38 @@ class MyNoteRecyclerViewAdapter(
 
     override fun getItemCount(): Int = mNotes.size
 
-    fun setItems(notes: ArrayList<Note>) {
+    fun setItems(notes: List<NoteWithTags>) {
         mNotes.clear()
         mNotes.addAll(notes)
         notifyDataSetChanged()
     }
 
     inner class ViewHolder(view: View) :
-        androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
+        RecyclerView.ViewHolder(view) {
         private val llTagContainer: LinearLayout = view.findViewById(R.id.llTagContainer)
         private val tvTitle: TextView = view.findViewById(R.id.tvTitle)
         private val tvNoteListItemContent: TextView = view.findViewById(R.id.tvNoteListItemContent)
 
-        fun bind(item: Note, onNoteSelectedListener: NoteListContract.OnNoteSelectedListener) {
-            tvTitle.text = item.id.toString()
-            tvNoteListItemContent.text = item.title
-            if (item.tag.isEmpty()) {
+        fun bind(
+            noteWithTags: NoteWithTags,
+            onNoteSelectedListener: NoteListContract.OnNoteSelectedListener
+        ) {
+            val note = noteWithTags.note
+            tvTitle.text = note.id.toString()
+            tvNoteListItemContent.text = note.title
+
+            val tags = noteWithTags.tags
+            if (tags.isEmpty()) {
                 llTagContainer.visibility = View.GONE
             } else {
-                val tvTagTitle = llTagContainer.findViewById<TextView>(R.id.tvTag)
-                val tvTagIcon = llTagContainer.findViewById<TextView>(R.id.tvIcon)
-
-                tvTagTitle.text = item.tag
-                tvTagIcon.setBackgroundColor(Color.parseColor(item.tagColour))
+                llTagContainer.visibility = View.VISIBLE
+                val tag = tags[0]
+                llTagContainer.findViewById<TextView>(R.id.tvTag).text = tag.name
+                llTagContainer.findViewById<TextView>(R.id.tvIcon)
+                    .setBackgroundColor(Color.parseColor(tag.colour))
             }
 
-            itemView.setOnClickListener{ onNoteSelectedListener.onNoteSelected(item) }
+            itemView.setOnClickListener { onNoteSelectedListener.onNoteSelected(noteWithTags) }
         }
 
         override fun toString(): String {

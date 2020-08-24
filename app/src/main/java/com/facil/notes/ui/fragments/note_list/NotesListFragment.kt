@@ -9,8 +9,9 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ProgressBar
 import com.facil.notes.R
+import com.facil.notes.framework.BaseActivity
 import com.facil.notes.framework.BaseFragment
-import com.facil.notes.pojos.Note
+import com.facil.notes.pojos.NoteWithTags
 import com.facil.notes.repositories.NotesRepository
 import com.facil.notes.ui.adapters.MyNoteRecyclerViewAdapter
 
@@ -18,7 +19,7 @@ import com.facil.notes.ui.adapters.MyNoteRecyclerViewAdapter
  * A fragment representing a list of Items.
  */
 class NotesListFragment : BaseFragment(), NoteListContract.View {
-    private val presenter: NoteListContract.Presenter = NoteListPresenter(this, NotesRepository())
+    private var presenter: NoteListContract.Presenter? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -27,7 +28,9 @@ class NotesListFragment : BaseFragment(), NoteListContract.View {
             return
         }
 
-        presenter.loadNotes()
+        val appDatabase = (activity as BaseActivity).getDatabase()
+        presenter = NoteListPresenter(this, NotesRepository(appDatabase))
+        presenter?.loadNotes()
     }
 
     override fun onCreateView(
@@ -46,11 +49,11 @@ class NotesListFragment : BaseFragment(), NoteListContract.View {
         val etSearch = view.findViewById<EditText>(R.id.etSearch)
         etSearch.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                val str = s.toString();
+                val str = s.toString()
                 if (str.isEmpty()) {
-                    presenter.loadNotes()
+                    presenter?.loadNotes()
                 } else {
-                    presenter.searchNotes(str)
+                    presenter?.searchNotes(str)
                 }
             }
 
@@ -61,8 +64,8 @@ class NotesListFragment : BaseFragment(), NoteListContract.View {
         return view
     }
 
-    override fun onNoteSelected(note: Note) {
-        (activity as NoteListContract.OnNoteSelectedListener).onNoteSelected(note)
+    override fun onNoteSelected(noteWithTags: NoteWithTags) {
+        (activity as NoteListContract.OnNoteSelectedListener).onNoteSelected(noteWithTags)
     }
 
     override fun onNotesLoading() {
@@ -75,15 +78,16 @@ class NotesListFragment : BaseFragment(), NoteListContract.View {
         lvNotes?.visibility = View.GONE
     }
 
-    override fun onNotesLoaded(notes: ArrayList<Note>) {
+    override fun onNotesLoaded(notes: List<NoteWithTags>) {
         updateListView(notes)
     }
 
     override fun onNotesLoadFailure(e: Exception) {
-        TODO("Not yet implemented")
+        println("failed to load notes")
+        println(e)
     }
 
-    override fun onNotesFound(notes: ArrayList<Note>) {
+    override fun onNotesFound(notes: List<NoteWithTags>) {
         updateListView(notes)
     }
 
@@ -91,7 +95,7 @@ class NotesListFragment : BaseFragment(), NoteListContract.View {
         TODO("Not yet implemented")
     }
 
-    private fun updateListView(notes: ArrayList<Note>) {
+    private fun updateListView(notes: List<NoteWithTags>) {
         // Hide Progress Bar
         val progressBar = view?.findViewById<ProgressBar>(R.id.pgNotesList)
         progressBar?.visibility = View.GONE

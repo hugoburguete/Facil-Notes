@@ -1,18 +1,14 @@
 package com.facil.notes.pojos
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-@Fts4
-@Entity(
-    tableName = "notes",
-    indices = [Index(value = ["title", "content"])]
-)
+@Entity(tableName = "notes")
 data class Note(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "rowid") var id: Int,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "rowid") var id: Int? = null,
     var title: String = "",
-    var content: String = "",
-    @Embedded var tag: Tag?,
-    @ColumnInfo(name = "tag_colour") var tagColour: String = ""
+    var content: String = ""
 ) {
 
     override fun toString(): String {

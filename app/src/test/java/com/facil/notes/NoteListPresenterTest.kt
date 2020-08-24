@@ -60,7 +60,7 @@ class NoteListPresenterTest {
         var i = 0
         while (i < 20) {
             val note = Note()
-            note.id = i.toString()
+            note.id = i
             note.title = "Note $i"
             noteList.add(note)
             i++

@@ -7,13 +7,12 @@ import android.view.MenuItem
 import android.widget.FrameLayout
 import com.facil.notes.R
 import com.facil.notes.framework.BaseActivity
-import com.facil.notes.pojos.Note
+import com.facil.notes.pojos.NoteWithTags
 import com.facil.notes.ui.fragments.note_editor.NoteEditorContract
 import com.facil.notes.ui.fragments.note_editor.NoteEditorFragment
 import com.facil.notes.ui.fragments.note_list.NoteListContract
 import com.facil.notes.ui.fragments.note_list.NotesListFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : BaseActivity(), NoteListContract.OnNoteSelectedListener,
     NoteEditorContract.OnNoteLoadFailureListener, NoteEditorContract.OnNoteSavedListener {
@@ -25,9 +24,9 @@ class MainActivity : BaseActivity(), NoteListContract.OnNoteSelectedListener,
         setContentView(R.layout.activity_main)
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        fab.setOnClickListener {
+            val intent = Intent(this, NoteEditorActivity::class.java)
+            startActivity(intent)
         }
 
         inflateFragment(R.id.fl_notes_list, notesListFragment)
@@ -45,13 +44,14 @@ class MainActivity : BaseActivity(), NoteListContract.OnNoteSelectedListener,
         }
     }
 
-    override fun onNoteSelected(note: Note) {
+    override fun onNoteSelected(noteWithTags: NoteWithTags) {
+        val note = noteWithTags.note
         val flNoteEditor = findViewById<FrameLayout>(R.id.fl_note_editor)
         if (flNoteEditor != null) {
             val noteEditorFragment =
                 NoteEditorFragment()
             val bundle = Bundle()
-            bundle.putInt("noteId", note.id)
+            note.id?.let { bundle.putInt("noteId", it) }
             noteEditorFragment.arguments = bundle
             inflateFragment(R.id.fl_note_editor, noteEditorFragment)
         } else {
@@ -64,14 +64,15 @@ class MainActivity : BaseActivity(), NoteListContract.OnNoteSelectedListener,
     }
 
     override fun onNoteLoadFailure(e: Exception) {
-        TODO("Not yet implemented")
+        println("failed to load notes")
+        println(e)
     }
 
     override fun onNoteSaved() {
-        TODO("Not yet implemented")
+        println("note saved")
     }
 
     override fun onNoteSaveFailure(e: Exception) {
-        TODO("Not yet implemented")
+        println("note not saved")
     }
 }

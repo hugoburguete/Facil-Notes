@@ -1,67 +1,55 @@
 package com.facil.notes.repositories
 
+import com.facil.notes.database.AppDatabase
 import com.facil.notes.framework.BaseRepository
 import com.facil.notes.pojos.Note
+import com.facil.notes.pojos.NoteTagRelation
+import com.facil.notes.pojos.NoteWithTags
+import com.facil.notes.pojos.Tag
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
 interface NoteRepositoryContract {
-    suspend fun getNotes(): ArrayList<Note>
+    suspend fun getNotes(): List<NoteWithTags>
 
-    suspend fun getNotesBySearchTerm(searchTerm: String): ArrayList<Note>
+    suspend fun getNotesBySearchTerm(searchTerm: String): List<NoteWithTags>
 
     suspend fun getNote(noteId: Int): Note
 
-    suspend fun saveNote(note: Note)
+    suspend fun saveNote(note: Note, tags: List<Tag>)
 }
 
-class NotesRepository : BaseRepository(), NoteRepositoryContract {
-    override suspend fun getNotes(): ArrayList<Note> {
-        // TODO: Implement this
+class NotesRepository(private val appDatabase: AppDatabase) : BaseRepository(),
+    NoteRepositoryContract {
+    override suspend fun getNotes(): List<NoteWithTags> {
         return withContext(Dispatchers.IO) {
-            val noteList = ArrayList<Note>()
-            var i = 0
-            while (i < 20) {
-                val note = Note(id = i)
-                note.title = "Note $i"
-                noteList.add(note)
-                i++
-            }
-            noteList
+            appDatabase.noteDao().getAll()
         }
     }
 
     /**
      * Retrieves notes with titles / descriptions matching the search term
      */
-    override suspend fun getNotesBySearchTerm(searchTerm: String): ArrayList<Note> {
-        // TODO: Implement this
+    override suspend fun getNotesBySearchTerm(searchTerm: String): List<NoteWithTags> {
         return withContext(Dispatchers.IO) {
-            val noteList = ArrayList<Note>()
-            var i = 0
-            while (i < 10) {
-                val note = Note(id = i)
-                note.title = "Note search result $i"
-                noteList.add(note)
-                i++
-            }
-            noteList
+            appDatabase.noteDao().getAll()
         }
     }
 
     override suspend fun getNote(noteId: Int): Note {
-        // TODO: Implement this
         return withContext(Dispatchers.IO) {
-            val note = Note(noteId)
-            note.title = "Note $noteId"
-            note.content = "some content"
-            delay(200)
-            note
+            appDatabase.noteDao().findById(noteId)
         }
     }
 
-    override suspend fun saveNote(note: Note) {
-        // TODO: Implement this
+    override suspend fun saveNote(note: Note, tags: List<Tag>) {
+        return withContext(Dispatchers.IO) {
+            val noteId = appDatabase.noteDao().insert(note)
+            val tagIds = appDatabase.tagsDao().insertAll(*tags.toTypedArray())
+            tagIds.forEach { tagId ->
+                val relation = NoteTagRelation(noteId, tagId)
+                appDatabase.noteTagRelationDao().insert(relation)
+            }
+        }
     }
 }

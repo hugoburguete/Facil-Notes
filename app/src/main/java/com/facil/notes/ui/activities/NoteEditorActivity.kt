@@ -46,7 +46,7 @@ class NoteEditorActivity : BaseActivity(), NoteEditorContract.OnNoteSavedListene
     }
 
     override fun onNoteSaveFailure(e: Exception) {
-        TODO("Not yet implemented")
+        println(e)
     }
 
     override fun onNoteLoadFailure(e: Exception) {

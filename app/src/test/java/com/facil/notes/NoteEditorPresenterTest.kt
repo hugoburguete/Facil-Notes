@@ -46,10 +46,10 @@ class NoteEditorPresenterTest {
     @Test
     fun `should load a note`() {
         val expectedNote = Note()
-        expectedNote.id = "1"
+        expectedNote.id = 1
         runBlocking {
-            Mockito.`when`(repository.getNote("1")).thenReturn(expectedNote)
-            presenter.loadNote("1")
+            Mockito.`when`(repository.getNote(1)).thenReturn(expectedNote)
+            presenter.loadNote(1)
             Mockito.verify(view).onNoteLoaded(expectedNote)
         }
     }
